@@ -72,7 +72,7 @@ public class HandPrecense : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No matching controller found! Adding default Controller");
+                Debug.Log("No matching controller found! Adding default Controller");
                 _spawnedController = Instantiate(controllerPrefabs[0], transform);
             }
             _spawnedHand = Instantiate(handPrefab, transform);
