@@ -6,6 +6,7 @@ using EzySlice;
 public class Slicer : MonoBehaviour
 {
     #region PUBLIC PARAMETERS
+    public GameObject hullsParent;
     public Material crossSectionMaterial;
     public bool isCutting = false;
     //public GameObject ObjectToCut; 
@@ -16,8 +17,6 @@ public class Slicer : MonoBehaviour
     #endregion
 
     #region PRIVATE PARAMETERS
-    private EzySlice.Plane cutter; 
-    private GameObject _objInColision;
     private GameObject resultUp;
     private GameObject resultLow;
      
@@ -30,7 +29,7 @@ public class Slicer : MonoBehaviour
         if (!isCutting)
         {
             isCutting = true;
-            if (other.gameObject.layer == 10)
+            if (other.gameObject.layer == 6)
             {
                 SlicedHull hull = sliceObject(other.gameObject, crossSectionMaterial);
                 if (hull != null)
@@ -38,7 +37,6 @@ public class Slicer : MonoBehaviour
                     resultLow = hull.CreateLowerHull(other.gameObject, crossSectionMaterial);
                     resultUp = hull.CreateUpperHull(other.gameObject, crossSectionMaterial);
 
-                    other.gameObject.SetActive(false);
                 }
                 else
                 {
@@ -46,6 +44,7 @@ public class Slicer : MonoBehaviour
                 }
                 if (resultUp != null && resultLow != null)
                 {
+                    Destroy(other.gameObject);
                     updateResultObject(resultUp);
                     updateResultObject(resultLow);
                 }
@@ -65,11 +64,26 @@ public class Slicer : MonoBehaviour
 
     private void updateResultObject(GameObject result)
     {
-        result.layer = 10; 
-        result.AddComponent<BoxCollider>();
-        Rigidbody rb = result.AddComponent<Rigidbody>();
-        rb.mass = 2;
-        rb.useGravity = true;
+        if(result != null)
+        {
+            result.transform.parent = hullsParent.transform;
+            result.layer = 6;
+            result.AddComponent<BoxCollider>();
+            Rigidbody rb = result.GetComponent<Rigidbody>(); 
+            if(rb == null)
+            {
+                rb = result.AddComponent<Rigidbody>();
+                rb.mass = 2;
+                rb.useGravity = true;
+            }
+            else
+            {
+                rb.mass = 2;
+                rb.useGravity = true;
+            }
+            
+        }
+        
     }
 
 }

@@ -139,7 +139,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303041541639131753}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.05, y: 0.67, z: 0.01}
@@ -156,7 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1aac8c79ea81b741b69a71bd649bbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crossSectionMaterial: {fileID: 0}
+  crossSectionMaterial: {fileID: 2100000, guid: 1f753ac4998bbf14cbf12f697c79f666,
+    type: 2}
   isCutting: 0
   _cuttingPlane: {fileID: 7249444801493638030}
 --- !u!1 &497605623082403154

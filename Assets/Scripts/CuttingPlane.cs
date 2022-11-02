@@ -11,12 +11,6 @@ public class CuttingPlane : MonoBehaviour
         _cuttingPlane = new EzySlice.Plane();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnDrawGizmos()
     {
         //EzySlice.Plane cuttingPlane = new EzySlice.Plane();
