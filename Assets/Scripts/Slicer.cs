@@ -25,11 +25,11 @@ public class Slicer : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.gameObject.name);
+        Debug.Log(other.gameObject.name +"||"+ other.gameObject.tag + "||" + other.gameObject.layer);
         if (!isCutting)
         {
             isCutting = true;
-            if (other.gameObject.layer == 6)
+            if (other.gameObject.layer == 6 && other.CompareTag("SpawnedMat"))
             {
                 SlicedHull hull = sliceObject(other.gameObject, crossSectionMaterial);
                 if (hull != null)
@@ -47,6 +47,11 @@ public class Slicer : MonoBehaviour
                     Destroy(other.gameObject);
                     updateResultObject(resultUp);
                     updateResultObject(resultLow);
+                }
+                else
+                {
+                    Destroy(resultLow);
+                    Destroy(resultUp);
                 }
             }
         }
@@ -66,22 +71,27 @@ public class Slicer : MonoBehaviour
     {
         if(result != null)
         {
+            //result.layer = 6;
             result.transform.parent = hullsParent.transform;
-            result.layer = 6;
-            result.AddComponent<BoxCollider>();
-            Rigidbody rb = result.GetComponent<Rigidbody>(); 
-            if(rb == null)
+            //Add Collider to the result
+            MeshCollider collider =  result.AddComponent<MeshCollider>();
+            if(collider != null)
             {
-                rb = result.AddComponent<Rigidbody>();
-                rb.mass = 2;
-                rb.useGravity = true;
+                collider.convex = true;
+                //Add rigidbody if collider is not null to avoid problems
+                Rigidbody rb = result.AddComponent<Rigidbody>();
+                if (rb != null)
+                { 
+                    rb.mass = 2;
+                    rb.useGravity = true;
+                    rb.AddForce(new Vector3(0.5f, 0.1f, 0), ForceMode.Impulse);
+                }
             }
-            else
-            {
-                rb.mass = 2;
-                rb.useGravity = true;
-            }
-            
+        }
+        //if result was null destroy it
+        else
+        {
+            Destroy(result);
         }
         
     }
