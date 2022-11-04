@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2639295116411159883}
   - component: {fileID: 4439128459150201989}
   - component: {fileID: 8645590358758010580}
+  - component: {fileID: 7001366994971995343}
   m_Layer: 0
   m_Name: Shinai
   m_TagString: Untagged
@@ -263,6 +264,20 @@ MonoBehaviour:
   m_ForceGravityOnDetach: 0
   m_RetainTransformParent: 1
   m_AttachPointCompatibilityMode: 0
+--- !u!136 &7001366994971995343
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8513873922260474979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.2
+  m_Height: 0.38
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.17, z: 0}
 --- !u!1 &8562425715139224334
 GameObject:
   m_ObjectHideFlags: 0

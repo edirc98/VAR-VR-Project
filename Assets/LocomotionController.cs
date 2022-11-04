@@ -8,9 +8,13 @@ public class LocomotionController : MonoBehaviour
 
     [Header("Controllers")]
     public XRController leftTeleportRay;
+    public XRController rightInteractor;
     [Header("Buttons")]
+    public InputHelpers.Button interactorActivationButton; 
     public InputHelpers.Button teleportActivationButton;
     public float activationThreshold = 0.1f;
+    public float interactionThreshold = 0.3f; 
+    public bool enableLeftTeleport { get; set; } = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +26,24 @@ public class LocomotionController : MonoBehaviour
     {
         if (leftTeleportRay)
         {
-            leftTeleportRay.gameObject.SetActive(checkIfActivated(leftTeleportRay));
+            leftTeleportRay.gameObject.SetActive(enableLeftTeleport && checkIfActivated(leftTeleportRay));
         }
+        //if (rightInteractor)
+        //{
+        //    rightInteractor.gameObject.SetActive(checkIfGrabed(rightInteractor));
+        //}
+
     }
 
     public bool checkIfActivated(XRController controller)
     {
         InputHelpers.IsPressed(controller.inputDevice, teleportActivationButton, out bool isActivated, activationThreshold);
         return isActivated;
+    }
+
+    public bool checkIfGrabed(XRController controller)
+    {
+        InputHelpers.IsPressed(controller.inputDevice, teleportActivationButton, out bool isActivated, interactionThreshold);
+        return !isActivated;
     }
 }
