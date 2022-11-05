@@ -5,8 +5,8 @@ using UnityEngine;
 public class UIController : MonoBehaviour
 {
     [Header("Kendo Armor")]
-    public GameObject KendoArmor; 
-    
+    public GameObject KendoArmor;
+
     public void ToggleArmor()
     {
         if (KendoArmor.activeSelf)

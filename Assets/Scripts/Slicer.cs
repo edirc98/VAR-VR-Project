@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using EzySlice;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class Slicer : MonoBehaviour
 {
@@ -19,19 +20,47 @@ public class Slicer : MonoBehaviour
     #region PRIVATE PARAMETERS
     private GameObject resultUp;
     private GameObject resultLow;
-     
+
+    private XRController activeController;
+    private XRGrabInteractable interactable;
+    private IXRSelectInteractor interactor; 
+
+    private void Start()
+    {
+        interactable = transform.parent.GetComponent<XRGrabInteractable>();
+        
+    }
     #endregion
-    
+    private void Update()
+    {
+        interactor = interactable.firstInteractorSelecting;
+        if (interactable == null)
+        {
+            Debug.Log("Interactable was null");
+        }
+        else if (interactor == null)
+        {
+            Debug.Log("Interactor was null");
+        }
+        else
+        {
+            Debug.Log("All good");
+            Debug.Log(interactor.transform.gameObject.name);
+            activeController = interactor.transform.gameObject.GetComponent<XRController>();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name +"||"+ other.gameObject.tag + "||" + other.gameObject.layer);
+
+        //Debug.Log(other.gameObject.name +"||"+ other.gameObject.tag + "||" + other.gameObject.layer);
         if (!isCutting)
         {
             isCutting = true;
             if (other.gameObject.layer == 6 && other.CompareTag("SpawnedMat"))
             {
                 SlicedHull hull = sliceObject(other.gameObject, crossSectionMaterial);
+                if(activeController != null) activeController.SendHapticImpulse(0.7f, 0.2f);
                 if (hull != null)
                 {
                     resultLow = hull.CreateLowerHull(other.gameObject, crossSectionMaterial);
