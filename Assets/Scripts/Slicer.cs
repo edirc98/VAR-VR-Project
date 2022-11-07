@@ -34,17 +34,8 @@ public class Slicer : MonoBehaviour
     private void Update()
     {
         interactor = interactable.firstInteractorSelecting;
-        if (interactable == null)
+        if(interactable != null && interactor != null)
         {
-            Debug.Log("Interactable was null");
-        }
-        else if (interactor == null)
-        {
-            Debug.Log("Interactor was null");
-        }
-        else
-        {
-            Debug.Log("All good");
             Debug.Log(interactor.transform.gameObject.name);
             activeController = interactor.transform.gameObject.GetComponent<XRController>();
         }
@@ -53,7 +44,6 @@ public class Slicer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
-        //Debug.Log(other.gameObject.name +"||"+ other.gameObject.tag + "||" + other.gameObject.layer);
         if (!isCutting)
         {
             isCutting = true;
